@@ -1,3 +1,78 @@
+.boxAlert
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 200;
+    display: none;
+}
+.boxAlert .boxAlert_bgOverplay
+{
+    width: 100%;
+    height: 100%;
+    background: rgba(0 0 0 / 50%);
+    z-index: 200;
+}
+.boxAlert .iconAlert
+{
+    font-size: 39px;
+    color: red;
+    position: absolute;
+    top: 10px;
+}
+.boxAlert .boxAlert_messenger
+{
+    position: absolute;
+    width: max-content;
+    height: 200px;
+    padding: 15px 40px;
+    border-radius: 10px;
+    background: white;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.boxAlert .textAlert
+{
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}
+.boxAlert .boxBtnAlert
+{
+    position: absolute;
+    bottom: 24px;
+}
+.boxAlert .boxBtnAlert .confirm
+{
+    padding: 10px 15px;
+    background: #1ea3b0;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+.boxAlert .boxBtnAlert .cancel
+{
+    padding: 10px 15px;
+    background: #777777;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+
 
 /*=================\ RESIZE =================*/
 .backgound_overplay
@@ -9,8 +84,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: -1;
-    opacity: 0.6;
+    z-index: 1;
+    opacity: 0.1;
 }
 .namesize_overplay
 {
@@ -28,9 +103,10 @@
     font-size: 22px;
     color: white;
     justify-content: center;
-    background: rgba(0 0 0 / 20%);
+    background: rgba(0 0 0 / 40%);
     opacity: 0;
     font-weight: bold;
+    z-index: 5;
 }
 .sameParent:hover .namesize_overplay
 {
@@ -234,6 +310,8 @@
 .parentImage .box__single_image
 {
     display: none;
+    position: static;
+    z-index: 3;
 }
 .parentImage .notimage
 {
@@ -247,6 +325,8 @@
     height: 170px;
     max-width: 300px;
     object-fit: contain;
+    position: relative;
+    z-index: 3;
 }
 .parentImage .overplay
 {

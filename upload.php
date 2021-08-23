@@ -1,4 +1,16 @@
 <?php
+if(!file_exists("images/"))
+{
+    mkdir("images/");
+}
+if(!file_exists("images/multiple/"))
+{
+    mkdir("images/multiple/");
+}
+if(!file_exists("images/single/"))
+{
+    mkdir("images/single/");
+}
 // upload hình 1 
 if($_FILES["image1"]["name"] != "")
 {
@@ -28,5 +40,5 @@ for($i=0; $i < $input1_count; $i++)
         move_uploaded_file($fileExist["tmp_name"], $path_single_file);
     }
 }
-header('Location: index.php');
+header('Location: images.php');
 exit;

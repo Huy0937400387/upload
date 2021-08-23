@@ -17,7 +17,8 @@
 <body>
     <form action="upload.php" enctype="multipart/form-data" method="post">
       <div class="container">
-          <button type="submit">GỬI</button>
+          <button class="send" type="submit">Upload</button>
+          <a class="view" target="_blank" href="images.php">Xem hình</a>
             <div class="row mb-20 ">
                 <div class="col-md-4">
                     <label for="">DEMO 1 (Upload 1 hình), tối đa 1MB</label>
@@ -59,6 +60,12 @@
       </div>
     </form>
     <style>
+    .view,.send
+    {
+        padding: 8px 15px;
+        background: gray;
+        color: white;
+    }
     form
     {
         padding: 20px 0px;
@@ -72,15 +79,15 @@
        
         $(document).ready(function() {
             $('.UploadImage').Upload_Single(
-        {
-            inputFileName   : "image",
-            urlValidate     : "validate.php",
-            defaultValidate : true,     // true là validate bằng ajax request tới server
-            allowExtension  : [{ext: "jpg",mime:"image/jpeg"},{ext: "png",mime:"image/png"}],
-            alertExtension  : "Vui lòng chọn jpg, png",
-            alertMaxsize    : "File không vượt quá 0.2MB",
-            maxSize         : 1
-        });
+            {
+                inputFileName   : "image",
+                urlValidate     : "validate.php",
+                defaultValidate : true,     // true là validate bằng ajax request tới server
+                allowExtension  : [{ext: "jpg",mime:"image/jpeg"},{ext: "png",mime:"image/png"}],
+                alertExtension  : "Vui lòng chọn jpg, png",
+                alertMaxsize    : "File không vượt quá 0.2MB",
+                maxSize         : 1
+            });
         //=======================
         $('.UploadImage2').Upload_Single(
         {

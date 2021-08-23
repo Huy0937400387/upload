@@ -3,7 +3,7 @@
     $.fn.Upload_Single = function(options) {
         function Plugin(selector) {
            let canChangetOptions  = {
-                                       classRemove          : "btnRemove", 
+                                       classRemove          : "default_btn_remove", 
                                        textUpload           : "Chọn file tải lên",
                                        classFormData        : "",
                                        classEdit            : "btnEdit", 
@@ -47,6 +47,16 @@
           $(this.element).parent().find("."+UploadSingle.defaultSetting.classSameparent).on("click",this.triggerClick);
            this.choosFile                 = this.choosFile.bind(this);
           $(this.element).on("change",this.choosFile);        
+          // xoá
+          this.remove              = this.remove.bind(this);
+          $(this.element).parent().find(".btnRemove").on("click",this.remove);
+          // đồng ý xoá 
+          this.confirm_remove              = this.confirm_remove.bind(this);
+          $(this.element).parent().find(".confirm").on("click",this.confirm_remove);
+          // huỷ xoá 
+          this.cancel_remove              = this.cancel_remove.bind(this);
+          $(this.element).parent().find(".cancel").on("click",this.cancel_remove);
+
         }
         //==================\ TẠO KHUNG HÌNH ====================
         Plugin.prototype.createFrame    = function () 
@@ -64,7 +74,7 @@
              
                // Button xoá 
            let btnRemove                      = document.createElement("button"); 
-               btnRemove.className            = UploadSingle.settings.classRemove;
+               btnRemove.className            = UploadSingle.settings.classRemove+ " btnRemove";
                btnRemove.type                 = "button";
                $.each($(UploadSingle.defaultSetting.selector).data(), function(key, value) {
                    $(btnRemove).attr('data-'+key,value );
@@ -121,6 +131,19 @@
                $(parentImage).append(notimage);
                 //============
            let parentWrap                     = $(UploadSingle.defaultSetting.selector).parent();    
+                $(parentWrap).addClass("parentWrap");
+                $(parentWrap).attr("id",this.element.className);
+                $(parentWrap).append(`<div class="boxAlert"> 
+                                            <div class="boxAlert_bgOverplay"></div>
+                                            <div class="boxAlert_messenger">
+                                                <div class="iconAlert"><i class="far fa-bell"></i></div>
+                                                <div class="textAlert">Bạn có muốn xoá không?</div>
+                                                <div class="boxBtnAlert">
+                                                    <span class="confirm">Đồng ý</span>
+                                                    <span class="cancel">Huỷ bỏ</span>
+                                                </div>
+                                            </div>
+                                        </div>`);
                $(parentWrap).append(parentImage);
                //=============
                // Kiểm tra hình tồn tại (có hình là edit)
@@ -145,7 +168,8 @@
                 $(btnEdit).append(iconEdit);
         }
         //============\ TRIGGER CLICK TỚI INPUT FILE ============
-        Plugin.prototype.triggerClick     = function (e) { 
+        Plugin.prototype.triggerClick     = function (e) 
+        { 
                let checkElement           = e.target;
                if(checkElement.className != this.settings.classRemove && checkElement.localName != "i" )
                {
@@ -311,7 +335,7 @@
                                            $(inputData).parent().find("."+UploadSingle.settings.classEdit).hide();
                                         }
                                        //=============================================
-                                       $(inputData).parent().find("."+UploadSingle.defaultSetting.classSameparent).append(`
+                                       $(inputData).parent().find(".box__single_image").append(`
                                             <div class="namesize_overplay">
                                                 <div class="namefile">${inputData.files[0].name.substr(0, 30)+"..."}</div>
                                                 <div class="sizefile">${res.size}</div>
@@ -320,7 +344,7 @@
                                         //=============================================
                                         if(isImage == true)
                                         {
-                                            $(inputData).parent().find("."+UploadSingle.defaultSetting.classSameparent).append(`
+                                            $(inputData).parent().find(".box__single_image").append(`
                                                  <div class="backgound_overplay" style="background-image: url('${srcImg}')"> </div>
                                             `);
                                         }
@@ -348,7 +372,29 @@
                    $(inputData).parent().find("."+UploadSingle.defaultSetting.classNotImg).show();
                }
         } 
-       
+        Plugin.prototype.remove        = function ()
+        {
+           $(this.element).parent().find(".boxAlert").fadeIn();
+        }
+        Plugin.prototype.confirm_remove        = function ()
+        {
+            $(this.element).parent().find();
+               let inputFile = this.element;  
+               inputFile.value = "";
+           $(this.element).parent().find(".boxAlert").hide();
+           $(this.element).parent().find(".box__single_image").hide();
+           $(this.element).parent().find(".textFiles").hide();
+           $(this.element).parent().find(".showImg").attr("src","");
+           $(this.element).parent().find(".notimage").show();
+           $(this.element).parent().find(".box_icon_upload").show();
+           $(this.element).parent().find("input").attr("data-image","");
+           $(this.element).parent().find(".backgound_overplay").remove();
+           $(this.element).parent().find(".namesize_overplay").remove();
+        }
+        Plugin.prototype.cancel_remove        = function ()
+        {
+            $(this.element).parent().find(".boxAlert").hide();
+        }
        let selectors = $(this);
         return [
                    $.each(selectors, function(index, selector){
@@ -692,7 +738,7 @@
                                                 UploadMultiple.changeValueName(getParent);
                                                 //===============/ LẤY TỔNG SỐ FILE ============
                                                 resolve({type: "success"});
-                                            },200)
+                                            },500)
                                            
                                        }
                                     }
